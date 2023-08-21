@@ -11,7 +11,7 @@ pipeline {
                     // Define the SSH command to execute on the remote host
                     def sshCommand = "ssh -i /var/lib/jenkins/.ssh/id_rsa" +
                                      " -o StrictHostKeyChecking=no" +
-                                     " ubuntu@182.18.184.71 'mkdir op-new'"
+                                     " ubuntu@182.18.184.71 'mkdir op-new-1'"
                     
                     // Execute the SSH command
                     sh sshCommand
@@ -25,18 +25,18 @@ pipeline {
             }
         }
         
-       stage('Deploy to Host') {
-    steps {
-        script {
-            // Load the SSH key into the agent manually
-            sh 'ssh-add /var/lib/jenkins/.ssh/id_rsa'
-
-            sshagent(['remote_host']) {
-                sh 'scp -rp /var/lib/jenkins/workspace/demo-php-github/* ubuntu@182.18.184.71:/var/www/html/'
+               stage('Deploy to Host') {
+            steps {
+                script {
+                    def sshCredentialId = 'remote_host'
+                    def ec2PublicIP = '182.18.184.71'
+                    
+                    // SSH command to deploy files to the EC2 instance
+                    def sshDeployCommand = "ssh -i /path/to/your/private_key -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/PHP-Demo/* /var/www/html/'"
+                    
+                    sh sshDeployCommand
+                }
             }
         }
-    }
-}
-
     }
 }
