@@ -25,14 +25,18 @@ pipeline {
             }
         }
         
-        stage('Deploy to Host') {
-            steps {
-                script {
-                    sshagent(['remote_host']) {
-                        sh 'scp -rp /var/lib/jenkins/workspace/demo-php-github/* ubuntu@182.18.184.71:/var/www/html/'
-                    }
-                }
+       stage('Deploy to Host') {
+    steps {
+        script {
+            // Load the SSH key into the agent manually
+            sh 'ssh-add /var/lib/jenkins/.ssh/id_rsa'
+
+            sshagent(['remote_host']) {
+                sh 'scp -rp /var/lib/jenkins/workspace/demo-php-github/* ubuntu@182.18.184.71:/var/www/html/'
             }
         }
+    }
+}
+
     }
 }
