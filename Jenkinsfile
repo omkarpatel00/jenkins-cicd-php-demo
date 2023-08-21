@@ -11,7 +11,7 @@ pipeline {
                     // Define the SSH command to execute on the remote host
                     def sshCommand = "ssh -i /var/lib/jenkins/.ssh/id_rsa" +
                                      " -o StrictHostKeyChecking=no" +
-                                     " ubuntu@182.18.184.71 'rmdir op'"
+                                     " ubuntu@182.18.184.71 'mkdir op-new'"
                     
                     // Execute the SSH command
                     sh sshCommand
