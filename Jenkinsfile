@@ -8,7 +8,7 @@ pipeline {
                     def sshCredentialId = 'remote_host'
                     def ec2PublicIP = '182.18.184.71'
 
-                    sh "ssh -i /home/ubuntu/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir kavya'"
+                    sh "ssh -i ${sshCredentialId} -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir kavya'"
                 }
             }
         }
