@@ -8,7 +8,7 @@ pipeline {
                     def sshCredentialId = 'remote_host'
                     def ec2PublicIP = '182.18.184.71'
 
-                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP}"
+                    sh "ssh -i /home/ubuntu/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir test-dir'"
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
                     def sshCredentialId = 'remote_host'
                     def ec2PublicIP = '182.18.184.71'
 
-                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/PHP-Demo/* ubuntu@${ec2PublicIP}:/var/www/html/'"
+                    sh "scp -i /home/ubuntu/.ssh/id_rsa -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/PHP-Demo/* ubuntu@${ec2PublicIP}:/var/www/html/"
                 }
             }
         }
