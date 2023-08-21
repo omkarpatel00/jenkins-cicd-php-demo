@@ -32,7 +32,7 @@ pipeline {
                     def ec2PublicIP = '182.18.184.71'
                     
                     // SSH command to deploy files to the EC2 instance
-                    def sshDeployCommand = "ssh -i /path/to/your/private_key -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/PHP-Demo/* /var/www/html/'"
+                    def sshDeployCommand = "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/PHP-Demo/* /var/www/html/'"
                     
                     sh sshDeployCommand
                 }
