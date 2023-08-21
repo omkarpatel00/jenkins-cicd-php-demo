@@ -5,36 +5,60 @@ pipeline {
         stage('SSH Connection') {
             steps {
                 script {
-                    // Define the SSH private key credential ID
-                    def sshCredentialId = 'remote_host'
+                    def sshCredentialId = 'your_ssh_credential_id'
+                    def ec2PublicIP = 'your_ec2_public_ip'
                     
-                    // Define the SSH command to execute on the remote host
-                    def sshCommand = "ssh -i /var/lib/jenkins/.ssh/id_rsa" +
-                                     " -o StrictHostKeyChecking=no" +
-                                     " ubuntu@182.18.184.71 "
-                    
-                    // Execute the SSH command
-                    sh sshCommand
+                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir op-new'"
                 }
             }
         }
         
-        stage('git clone') {
+        stage('Git Clone') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: 'omkarpatel00', url: 'https://github.com/omkarpatel00/jenkins-cicd-php-demo.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: 'your_git_credentials_id', url: 'https://github.com/yourusername/your-repo.git']]])
             }
         }
         
-               stage('Deploy to Host') {
+        stage('Deploy to Host') {
             steps {
                 script {
-                    def sshCredentialId = 'remote_host'
-                    def ec2PublicIP = '182.18.184.71'
+                    def sshCredentialId = 'your_ssh_credential_id'
+                    def ec2PublicIP = 'your_ec2_public_ip'
                     
-                    // SSH command to deploy files to the EC2 instance
-                    def sshDeployCommand = "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/PHP-Demo/* /var/www/html/'"
+                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp pipeline {
+    agent any
+    
+    stages {
+        stage('SSH Connection') {
+            steps {
+                script {
+                    def sshCredentialId = 'your_ssh_credential_id'
+                    def ec2PublicIP = 'your_ec2_public_ip'
                     
-                    sh sshDeployCommand
+                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir test-dir'"
+                }
+            }
+        }
+        
+        stage('Git Clone') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: 'your_git_credentials_id', url: 'https://github.com/yourusername/your-repo.git']]])
+            }
+        }
+        
+        stage('Deploy to Host') {
+            steps {
+                script {
+                    def sshCredentialId = 'your_ssh_credential_id'
+                    def ec2PublicIP = 'your_ec2_public_ip'
+                    
+                    sh "ssh -i /home/ubuntu/.ssh -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'scp -rp /var/lib/jenkins/workspace/your-pipeline-job-name/* ubuntu@${ec2PublicIP}:/var/www/html/'"
+                }
+            }
+        }
+    }
+}
+ ubuntu@${ec2PublicIP}:/var/www/html/'"
                 }
             }
         }
