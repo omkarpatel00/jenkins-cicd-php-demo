@@ -2,30 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('SSH Connection') {
-            steps {
-                script {
-                    def sshCredentialId = 'remote_host'
-                    def ec2PublicIP = '182.18.184.71'
-
-                    sh "ssh -i ${sshCredentialId} -o StrictHostKeyChecking=no ubuntu@${ec2PublicIP} 'mkdir DevOps'"
-                }
-            }
-        }
-
-        stage('Git Clone') {
+         stage('Git Clone') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[credentialsId: 'omkarpatel00', url: 'https://github.com/omkarpatel00/jenkins-cicd-php-demo.git']]])
             }
         }
 
-        stage('Deploy to Host') {
+        stage('Deploy PHP App') {
             steps {
                 script {
-                    def sshCredentialId = 'remote_host'
-                    def ec2PublicIP = '182.18.184.71'
-
-                    sh "scp -i /home/ubuntu/.ssh/id_rsa -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/PHP-Demo/* ubuntu@${ec2PublicIP}:/var/www/html/"
+                    sshagent(['remote_host']) {
+                        sh '''
+                            scp -r /var/lib/jenkins/workspace/PHP-Demo ubuntu@182.18.184.71:/var/www/html/
+                        '''
+                    }
                 }
             }
         }
