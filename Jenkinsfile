@@ -10,11 +10,13 @@ pipeline {
 
         stage('Deploy PHP App') {
             steps {
-                script {
-                    sshagent(['remote_host']) {
-                        sh '''
-                            scp -r /var/lib/jenkins/workspace/PHP-Demo ubuntu@182.18.184.71:/var/www/html/
-                        '''
+                withCredentials([sshUserPrivateKey(credentialsId: 'remote_host', keyFileVariable: 'PRIVATE_KEY')]) {
+                    script {
+                        sshagent(['remote_host']) {
+                            sh '''
+                                scp -i $PRIVATE_KEY -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/PHP-Demo/index.php ubuntu@182.18.184.71:/var/www/html/
+                            '''
+                        }
                     }
                 }
             }
