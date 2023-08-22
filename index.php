@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html>
- <head>
-  <title>Index</title>
- </head>
- <body>
- <?php echo '<p>Hello HYD  from PHP! Declarative pipeline!!</p>'; ?> 
- </body>
+<head>
+    <title>Sample PHP Page</title>
+</head>
+<body>
+    <h1>Hello, Jenkins!</h1>
+    <p>This is a sample PHP page deployed using Jenkins Pipeline.</p>
+</body>
 </html>
