@@ -31,16 +31,19 @@
             color: #666;
             line-height: 1.6;
         }
+        .highlight {
+            color: #FF5733;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Hello, From Cloud4c</h1>
+        <h1>Welcome to Cloud4C</h1>
     </header>
     <div class="container">
-        <p>This is a sample PHP page deployed using Jenkins Pipeline.</p>
-        <p>Client: John Doe</p>
-        <p>Contact: john.doe@example.com</p>
+        <p>This is a <span class="highlight">sample PHP page</span> deployed using Jenkins Pipeline. It showcases the power of automation and continuous deployment.</p>
+        <p>We are a <span class="highlight">DevOps team</span> dedicated to delivering seamless and efficient solutions.</p>
     </div>
 </body>
 </html>
