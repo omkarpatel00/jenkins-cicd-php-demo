@@ -43,7 +43,8 @@
     </header>
     <div class="container">
         <p>This is a <span class="highlight">sample PHP page</span> deployed using Jenkins Pipeline. It showcases the power of automation and continuous deployment.</p>
-        <p>We are a <span class="highlight">DevOps team</span> dedicated to delivering seamless and efficient solutions.</p>
+        <p> Welcome to <span class="highlight">Cloud4c </span> </p>
+        <p>We are <span class="highlight">DevOps team</span> dedicated to delivering seamless and efficient solutions.</p>
     </div>
 </body>
 </html>
